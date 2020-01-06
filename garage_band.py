@@ -1,28 +1,34 @@
-#!/usr/bin/env python
-
 class Band:
     '''Parent class which creates band instance'''
     all_bands = []
 
     def __init__(self, name, members):
         '''Takes in band name, members, and appends band to all_bands'''
-        self.name = str(name)
+        self.name = name
         self.members = members
-        self.__class__.all_bands.append(self)
+        self.__class__.all_bands.append(self.name)
 
     def __str__(self):
         '''Return band name'''
         return f'{self.name}'
 
-    def __repr__(self):
-        '''TODO: Make this better'''
-        return f'{self.name} with members {self.members}'
+    # def __repr__(self):
+    #     '''TODO: Make this better'''
+    #     return f'{self.name} with members {self.members}'
+
+    # def members(self):
+    #     return f'{self.members}'
 
     def play_solos(self):
         '''Prints str of band member play_solo method'''
+        solos = []
         for member in self.members:
             solo = member.play_solo()
             print(solo)
+            solos.append(solo)
+
+        return solos
+
 
     @classmethod
     def to_list(cls):
@@ -40,8 +46,8 @@ class Band:
         band_name = data.pop(0)
         members_list = []
         for _ in range(len(data)//2):
-            name = data.pop(0).strip()
-            instrument = data.pop(0).strip()
+            name = str(data.pop(0).strip())
+            instrument = str(data.pop(0).strip())
             member = Musician(name, instrument)
             members_list.append(member)
 
@@ -68,13 +74,13 @@ class Musician:
         return f'{self.name}'
 
     def __str__(self):
-        return f'Plays the {self.instrument}'
+        return f'{self.name} plays the {self.instrument}'
 
     def get_instrument(self):
-        return self.instrument()
+        return self.instrument
     
     def play_solo(self):
-        return f'{self.name} plays {self.instrument}'
+        return f'{self.name} plays a {self.instrument} solo'
 
 class Guitarist(Musician):
     '''From Musician class, creates guitarist class'''
@@ -100,5 +106,5 @@ def read_band_data_file(file='./assets/band_data.txt'):
 
 if __name__ == "__main__":
     tools = Band.create_from_data(read_band_data_file())
-    
-    tools.play_solos()
+    print(tools.members)
+    # tools.play_solos()
