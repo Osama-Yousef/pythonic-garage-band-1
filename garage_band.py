@@ -21,7 +21,8 @@ class Band:
     def play_solos(self):
         '''Prints str of band member play_solo method'''
         for member in self.members:
-            print(member.play_solo())
+            solo = member.play_solo()
+            print(solo)
 
     @classmethod
     def to_list(cls):
@@ -39,8 +40,8 @@ class Band:
         band_name = data.pop(0)
         members_list = []
         for _ in range(len(data)//2):
-            name = data.pop(0)
-            instrument = data.pop(0)
+            name = data.pop(0).strip()
+            instrument = data.pop(0).strip()
             member = Musician(name, instrument)
             members_list.append(member)
 
@@ -99,4 +100,5 @@ def read_band_data_file(file='./assets/band_data.txt'):
 
 if __name__ == "__main__":
     tools = Band.create_from_data(read_band_data_file())
-    print(tools.to_list())
+    
+    tools.play_solos()
