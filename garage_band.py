@@ -1,27 +1,32 @@
 #!/usr/bin/env python
 
 class Band:
+    '''Parent class which creates band instance'''
     all_bands = []
 
+    def __init__(self, name, members):
+        '''Takes in band name, members, and appends band to all_bands'''
+        self.name = str(name)
+        self.members = members
+        self.__class__.all_bands.append(self)
+
     def __str__(self):
-        '''TODO: Add all members to string. String comprehension possible?'''
+        '''Return band name'''
         return f'{self.name}'
 
     def __repr__(self):
         '''TODO: Make this better'''
         return f'{self.name}'
 
-    def __init__(self, name, members):
-        self.name = str(name)
-        self.members = members
-        self.__class__.all_bands.append(self)
-
     def play_solos(self):
+        '''Prints str of band member play_solo method'''
         for member in self.members:
             print(member.play_solo())
 
     @classmethod
     def to_list(cls):
+        '''Returns all Band instances from all_bands list'''
+
         return cls.all_bands
 
     @staticmethod
@@ -42,6 +47,15 @@ class Band:
         return Band(band_name, members_list)
 
 class Musician:
+    """
+    Parent class Musician:
+    __init__ - magic method, creates musician class from provided parameters
+    __repr__ - magic method, returns str of musician object
+     __str__ - magic method, returns str describing instantiated musician properties
+    get_instrument() - method, returns instrument as str
+         play_solo() - method, returns str '{name} plays {instrument}
+    """
+
     all = []
 
     def __init__(self, musician_name, instrument):
@@ -49,8 +63,8 @@ class Musician:
         self.instrument = instrument
         self.__class__.all.append(self)
 
-    def __repr__(self, name):
-        return self.name
+    def __repr__(self):
+        return f'{self.name}'
 
     def __str__(self):
         return f'Plays the {self.instrument}'
@@ -62,22 +76,16 @@ class Musician:
         return f'{self.name} plays {self.instrument}'
 
 class Guitarist(Musician):
+    '''From Musician class, creates guitarist class'''
     def __init__(self, name):
         super().__init__(name, 'guitar')
 
-# class Bassist(Musician):
-#     def __init__(self, name):
-#         super().__init__(name, 'bass')
+class Bassist(Musician):
+    '''From Musician class, creates Bassist class'''
+    def __init__(self, name):
+        super().__init__(name, 'bass')
 
-# class Drummer(Musician):
-#     def __init__(self, name):
-#         super().__init__(name, 'drums')
-
-# # A volcalist 'Is A' Musician
-# # 
-# class Vocalist(Musician):
-#     def __repr__(self):
-#         return f'Vocalist {self.name}'
-        
-#     def __str__(self):
-#         return 'I am a Vocalist name {self.name}'
+class Drummer(Musician):
+    '''From Musician class, creates Drummer class'''
+    def __init__(self, name):
+        super().__init__(name, 'drums')
