@@ -99,3 +99,4 @@ def read_band_data_file(file='./assets/band_data.txt'):
 
 if __name__ == "__main__":
     tools = Band.create_from_data(read_band_data_file())
+    print(tools.to_list())
