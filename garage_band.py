@@ -16,7 +16,7 @@ class Band:
 
     def __repr__(self):
         '''TODO: Make this better'''
-        return f'{self.name}'
+        return f'{self.name} with members {self.members}'
 
     def play_solos(self):
         '''Prints str of band member play_solo method'''
@@ -38,7 +38,7 @@ class Band:
         data = data.split(',')
         band_name = data.pop(0)
         members_list = []
-        for _ in range(len(data)/2):
+        for _ in range(len(data)//2):
             name = data.pop(0)
             instrument = data.pop(0)
             member = Musician(name, instrument)
@@ -89,3 +89,13 @@ class Drummer(Musician):
     '''From Musician class, creates Drummer class'''
     def __init__(self, name):
         super().__init__(name, 'drums')
+
+def read_band_data_file(file='./assets/band_data.txt'):
+    '''Read data from file, used for creating bands'''
+    
+    with open(file, 'r') as reader:
+        
+        return reader.read()
+
+if __name__ == "__main__":
+    tools = Band.create_from_data(read_band_data_file())
