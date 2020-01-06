@@ -1,27 +1,39 @@
-#!/usr/bin/env python
-
 class Band:
+    '''Parent class which creates band instance'''
     all_bands = []
 
-    def __str__(self):
-        '''TODO: Add all members to string. String comprehension possible?'''
-        return f'{self.name}'
-
-    def __repr__(self):
-        '''TODO: Make this better'''
-        return f'{self.name}'
-
     def __init__(self, name, members):
-        self.name = str(name)
+        '''Takes in band name, members, and appends band to all_bands'''
+        self.name = name
         self.members = members
-        self.__class__.all_bands.append(self)
+        self.__class__.all_bands.append(self.name)
+
+    def __str__(self):
+        '''Return band name'''
+        return f'{self.name}'
+
+    # def __repr__(self):
+    #     '''TODO: Make this better'''
+    #     return f'{self.name} with members {self.members}'
+
+    # def members(self):
+    #     return f'{self.members}'
 
     def play_solos(self):
+        '''Prints str of band member play_solo method'''
+        solos = []
         for member in self.members:
-            print(member.play_solo())
+            solo = member.play_solo()
+            print(solo)
+            solos.append(solo)
+
+        return solos
+
 
     @classmethod
     def to_list(cls):
+        '''Returns all Band instances from all_bands list'''
+
         return cls.all_bands
 
     @staticmethod
@@ -33,15 +45,24 @@ class Band:
         data = data.split(',')
         band_name = data.pop(0)
         members_list = []
-        for _ in range(len(data)/2):
-            name = data.pop(0)
-            instrument = data.pop(0)
+        for _ in range(len(data)//2):
+            name = str(data.pop(0).strip())
+            instrument = str(data.pop(0).strip())
             member = Musician(name, instrument)
             members_list.append(member)
 
         return Band(band_name, members_list)
 
 class Musician:
+    """
+    Parent class Musician:
+    __init__ - magic method, creates musician class from provided parameters
+    __repr__ - magic method, returns str of musician object
+     __str__ - magic method, returns str describing instantiated musician properties
+    get_instrument() - method, returns instrument as str
+         play_solo() - method, returns str '{name} plays {instrument}
+    """
+
     all = []
 
     def __init__(self, musician_name, instrument):
@@ -49,35 +70,41 @@ class Musician:
         self.instrument = instrument
         self.__class__.all.append(self)
 
-    def __repr__(self, name):
-        return self.name
+    def __repr__(self):
+        return f'{self.name}'
 
     def __str__(self):
-        return f'Plays the {self.instrument}'
+        return f'{self.name} plays the {self.instrument}'
 
     def get_instrument(self):
-        return self.instrument()
+        return self.instrument
     
     def play_solo(self):
-        return f'{self.name} plays {self.instrument}'
+        return f'{self.name} plays a {self.instrument} solo'
 
 class Guitarist(Musician):
+    '''From Musician class, creates guitarist class'''
     def __init__(self, name):
         super().__init__(name, 'guitar')
 
-# class Bassist(Musician):
-#     def __init__(self, name):
-#         super().__init__(name, 'bass')
+class Bassist(Musician):
+    '''From Musician class, creates Bassist class'''
+    def __init__(self, name):
+        super().__init__(name, 'bass')
 
-# class Drummer(Musician):
-#     def __init__(self, name):
-#         super().__init__(name, 'drums')
+class Drummer(Musician):
+    '''From Musician class, creates Drummer class'''
+    def __init__(self, name):
+        super().__init__(name, 'drums')
 
-# # A volcalist 'Is A' Musician
-# # 
-# class Vocalist(Musician):
-#     def __repr__(self):
-#         return f'Vocalist {self.name}'
+def read_band_data_file(file='./assets/band_data.txt'):
+    '''Read data from file, used for creating bands'''
+    
+    with open(file, 'r') as reader:
         
-#     def __str__(self):
-#         return 'I am a Vocalist name {self.name}'
+        return reader.read()
+
+if __name__ == "__main__":
+    tools = Band.create_from_data(read_band_data_file())
+    print(tools.members)
+    # tools.play_solos()
